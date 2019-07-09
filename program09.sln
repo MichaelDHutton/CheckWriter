@@ -1,0 +1,96 @@
+//This program is a check writing program the takes input from a user of mm/dd/yyyy, name of payee, and dollar amount from $1 to $10000 
+// It takes the dollar amount and translates into the long hand from of the amount.
+
+
+
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+class Numbers
+{
+private:
+	int num;
+
+public:
+	Numbers(double a)
+	{
+		num = a;
+			}
+	void print();
+};
+
+void Numbers::print() {
+	int b;
+
+	string zeroToTwenty[20] = {
+		"zero","one","two","three","four","five","six","seven", "eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"	};
+
+	string tens[9] = { "ten","twenty","thirty","fourty",
+		"fifty","sixty","seventy","eighty","ninety" };
+
+	if (num < 0)
+		cout << "That is a negative number.";
+	num = abs(num);
+	b = num / 1000;
+	if (b > 0)
+		cout << " " << zeroToTwenty[b] << " thousands ";
+	num %= 1000;
+	b = num / 100;
+	if (b > 0)
+		cout << zeroToTwenty[b] << " hundred ";
+	num %= 100;
+	if (num >= 20) {
+		b = num / 10;
+		if (b > 0)
+			cout << tens[b] << " ";
+	}
+	else if (num >= 10) {
+		cout << zeroToTwenty[num] << " ";
+		return;
+	}
+	num %= 10;
+	if (num > 0)
+		cout << zeroToTwenty[num];
+	cout << " ";
+
+}
+
+int main() {
+	string date;
+	double checkAmount;
+	string theirName;
+
+	cout << "Enter the Date (Month/Date/Year):";
+	cin >> date;
+	fflush(stdin);
+
+	cout << "\nEnter the name us the person or company you are paying: ";
+	cin >> theirName;
+	getline(cin, theirName);
+
+	cout << "\nEnter the amount of the check (0>amount<10000) $";
+	cin >> checkAmount;
+
+	if (checkAmount > 0 && checkAmount <= 10000) {
+		cout << setprecision(2) << fixed << showpoint;
+		cout << "\nDate:   " << date;
+		cout << "\n\n\n Pay to the Order of:  " << theirName 
+			<< "             $" << checkAmount << endl;
+		cout << endl;
+		cout << endl;
+		Numbers number(checkAmount);
+		number.print();
+	}
+	else 
+	{
+		cout << "This program doesm not use either negative numbers or \n";
+		cout << "or amounts greater than $10000 ";
+		cout << "Please try again: ";
+		cin >> checkAmount;
+	}
+	system("pause");
+	return 0;
+}
